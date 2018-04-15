@@ -1,9 +1,11 @@
 ﻿
 @model ToDoList.Models.Item;
 
+@{ 
+    ViewData["Title"] = "Item - Edit";
+}
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>To Do List - Edit</title>
 </head>
 <body>
     <h2>Edit</h2>
@@ -15,7 +17,10 @@
         @Html.HiddenFor(model => model.ItemId)
         @Html.LabelFor(model => model.Description)
         @Html.EditorFor(model => model.Description)
-        <input type="submit" value="Save" />
+
+        @Html.LabelFor(model => model.CategoryId)
+        @Html.DropDownList("CategoryId")
+        <input type="submit" value="Save" class="btn btn-default" />
     }
 
     <p>@Html.ActionLink("Back to list", "Index")</p>
