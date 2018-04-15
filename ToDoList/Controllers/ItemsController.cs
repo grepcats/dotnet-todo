@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -17,7 +18,20 @@ namespace ToDoList.Controllers
             _db = db;
         }
 
-        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+            return View(thisItem);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Item item)
+        {
+            _db.Entry(item).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Create()
         {
             return View();
