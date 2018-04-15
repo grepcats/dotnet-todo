@@ -18,6 +18,21 @@ namespace ToDoList.Controllers
             _db = db;
         }
 
+        public IActionResult Delete(int id)
+        {
+            var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+            return View(thisItem);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
+            _db.Items.Remove(thisItem);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Edit(int id)
         {
             var thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
