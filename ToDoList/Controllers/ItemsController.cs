@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 
+
+
 namespace ToDoList.Controllers
 {
     public class ItemsController : Controller
@@ -13,6 +15,20 @@ namespace ToDoList.Controllers
         public ItemsController(ToDoListContext db)
         {
             _db = db;
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Item item)
+        {
+            _db.Items.Add(item);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Index()
